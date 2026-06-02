@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký tài khoản</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <main class="container">
+        <div class="form-container">
+            <h2>Đăng Ký Tài Khoản</h2>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="flash-messages">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form action="/dangky" method="POST">
+                <div class="form-group">
+                    <label for="username">Tài khoản</label>
+                    <input type="text" id="username" name="username" class="form-control" placeholder="Tên đăng nhập viết liền không dấu" required autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Mật khẩu</label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Nhập mật khẩu bảo mật" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Xác nhận đăng ký</button>
+            </form>
+
+            <div class="form-links">
+                Đã có tài khoản? <a href="/dangnhap">Đăng nhập tại đây</a>
+                <br><br>
+                <a href="/">Quay lại trang chủ</a>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>

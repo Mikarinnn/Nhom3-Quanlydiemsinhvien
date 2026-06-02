@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ thống Quản lý Điểm Sinh Viên</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">Đại học Mỏ - Địa Chất</div>
+        <div class="user-menu">
+            {% if 'user_id' in session %}
+                <span>Xin chào, <strong>{{ session.get('full_name') }}</strong> ({{ session.get('role') }})</span>
+                <a href="/dangxuat" class="btn btn-danger">Đăng xuất</a>
+            {% else %}
+                <a href="/dangnhap" class="btn btn-primary">Đăng nhập</a>
+                <a href="/dangky" class="btn btn-primary">Đăng ký</a>
+            {% endif %}
+        </div>
+    </header>
+
+    <main class="container">
+        
+        {% if 'user_id' not in session %}
+            <section class="welcome-section text-center">
+                <h1>Hệ thống quản lý điểm sinh viên</h1>
+                <p>Trường Đại học Mỏ - Địa Chất</p>
+            </section>
+
+        {% elif session.get('role') == 'Admin' %}
+            <section class="dashboard-card">
+                <h2>Bảng Điều Khiển Admin</h2>
+                <div class="action-links">
+                    <a href="/admin/students" class="btn btn-outline">Quản lý Sinh viên</a>
+                    <a href="/admin/subjects" class="btn btn-outline">Quản lý Môn học</a>
+                    <a href="/admin/scores" class="btn btn-outline">Nhập Điểm</a>
+                </div>
+            </section>
+
+        {% elif session.get('role') == 'Student' %}
+            <section class="dashboard-card">
+                <h2>Khu Vực Học Tập</h2>
+                <p>Xem kết quả học tập và điểm tổng kết (GPA) của bạn tại đây.</p>
+                <a href="/student/scores" class="btn btn-primary">Xem Bảng Điểm Cá Nhân</a>
+            </section>
+        {% endif %}
+
+    </main>
+
+</body>
+</html>
