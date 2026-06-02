@@ -1,0 +1,225 @@
+/* =========================================
+   THIẾT LẬP CƠ BẢN (RESET & BIẾN MÀU)
+========================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* =========================================
+   THANH ĐIỀU HƯỚNG (NAVBAR)
+========================================= */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1e1e24;
+    padding: 15px 30px;
+    border-bottom: 1px solid #333;
+}
+
+.navbar .logo {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.user-menu span {
+    margin-right: 15px;
+    font-size: 0.9rem;
+    color: #aaaaaa;
+}
+
+.user-menu strong {
+    color: #ffffff;
+}
+
+/* =========================================
+   BỐ CỤC CHÍNH (MAIN CONTAINER)
+========================================= */
+.container {
+    max-width: 800px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* =========================================
+   CÁC KHỐI NỘI DUNG (CARDS & SECTIONS)
+========================================= */
+.welcome-section h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.welcome-section p {
+    color: #888888;
+    margin-bottom: 30px;
+}
+
+.dashboard-card {
+    background-color: #1e1e24;
+    padding: 40px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    text-align: center;
+}
+
+.dashboard-card h2 {
+    margin-bottom: 15px;
+    color: #ffffff;
+}
+
+.dashboard-card p {
+    color: #888888;
+    margin-bottom: 25px;
+}
+
+.action-links {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+/* =========================================
+   NÚT BẤM (BUTTONS)
+========================================= */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border: none;
+}
+
+.btn-large {
+    padding: 12px 30px;
+    font-size: 1.1rem;
+}
+
+/* Các loại màu nút */
+.btn-primary {
+    background-color: #3498db;
+    color: #ffffff;
+}
+.btn-primary:hover {
+    background-color: #2980b9;
+}
+
+.btn-danger {
+    background-color: transparent;
+    color: #e74c3c;
+    border: 1px solid #e74c3c;
+    padding: 8px 15px;
+}
+.btn-danger:hover {
+    background-color: #e74c3c;
+    color: #ffffff;
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: #e0e0e0;
+    border: 1px solid #555;
+}
+.btn-outline:hover {
+    background-color: #333;
+    border-color: #888;
+}
+
+/* =========================================
+   CẤU TRÚC FORM ĐĂNG KÝ / ĐĂNG NHẬP (BỔ SUNG)
+========================================= */
+.form-container {
+    max-width: 450px;
+    margin: 40px auto;
+    background-color: #1e1e24;
+    padding: 35px;
+    border-radius: 8px;
+    border: 1px solid #333;
+}
+
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #ffffff;
+    font-size: 1.8rem;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #aaaaaa;
+    font-size: 0.9rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 11px 15px;
+    background-color: #121212;
+    border: 1px solid #444;
+    border-radius: 4px;
+    color: #ffffff;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+.form-control:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+.w-100 {
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Khối thông báo lỗi/thành công */
+.flash-messages {
+    background-color: #e74c3c;
+    color: white;
+    padding: 12px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.form-links {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #888;
+}
+
+.form-links a {
+    color: #3498db;
+}
+.form-links a:hover {
+    text-decoration: underline;
+}
