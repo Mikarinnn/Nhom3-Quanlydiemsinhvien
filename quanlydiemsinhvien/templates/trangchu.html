@@ -12,7 +12,7 @@
         <div class="logo">Đại học Mỏ - Địa Chất</div>
         <div class="user-menu">
             {% if 'user_id' in session %}
-                <span>Xin chào, <strong>{{ session.get('full_name') }}</strong> ({{ session.get('role') }})</span>
+                <span>Xin chào, <strong>{{ session.get('full_name') }}</strong></span>
                 <a href="/dangxuat" class="btn btn-danger">Đăng xuất</a>
             {% else %}
                 <a href="/dangnhap" class="btn btn-primary">Đăng nhập</a>

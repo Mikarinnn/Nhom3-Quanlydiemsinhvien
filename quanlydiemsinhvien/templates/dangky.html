@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng ký tài khoản</title>
+    <title>Đăng ký tài khoản sinh viên</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
 
     <main class="container">
         <div class="form-container">
-            <h2>Đăng Ký Tài Khoản</h2>
+            <h2>Đăng Ký Sinh Viên</h2>
 
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
@@ -22,7 +22,22 @@
 
             <form action="/dangky" method="POST">
                 <div class="form-group">
-                    <label for="username">Tài khoản</label>
+                    <label for="full_name">Họ và tên sinh viên</label>
+                    <input type="text" id="full_name" name="full_name" class="form-control" placeholder="Ví dụ: Nguyễn Văn A" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="class_name">Lớp</label>
+                    <input type="text" id="class_name" name="class_name" class="form-control" placeholder="Ví dụ: CNTT-K22" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="major">Ngành học</label>
+                    <input type="text" id="major" name="major" class="form-control" placeholder="Ví dụ: Khoa học máy tính" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="username">Tên tài khoản đăng nhập</label>
                     <input type="text" id="username" name="username" class="form-control" placeholder="Tên đăng nhập viết liền không dấu" required autocomplete="off">
                 </div>
 

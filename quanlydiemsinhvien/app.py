@@ -96,6 +96,9 @@ def register():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
+        full_name = request.form.get('full_name')
+        class_name = request.form.get('class_name')
+        major = request.form.get('major')
         
         user_exists = User.query.filter_by(username=username).first()
         if user_exists:
@@ -108,17 +111,19 @@ def register():
             db.session.add(student_role)
             db.session.commit()
             
-        new_user = User(username=username, full_name='Chưa cập nhật', role=student_role)
+        # Lưu thông tin User mới
+        new_user = User(username=username, full_name=full_name, role=student_role)
         new_user.set_password(password)
         
         db.session.add(new_user)
-        db.session.commit() 
+        db.session.commit()
         
-        new_profile = StudentProfile(user_id=new_user.id, class_name='Chưa cập nhật', major='Chưa cập nhật')
+        # Lưu thông tin Lớp và Ngành 
+        new_profile = StudentProfile(user_id=new_user.id, class_name=class_name, major=major)
         db.session.add(new_profile)
         db.session.commit()
         
-        flash('Đăng ký tài khoản thành công! Vui lòng đăng nhập.')
+        flash('Đăng ký tài khoản sinh viên thành công! Vui lòng đăng nhập.')
         return redirect(url_for('login')) 
         
     return render_template('dangky.html')
