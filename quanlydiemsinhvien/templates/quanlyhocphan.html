@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý Học Phần</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">Quản Trị Hệ Thống</div>
+        <div class="user-menu"><a href="/" class="btn btn-outline">Quay lại Trang chủ</a></div>
+    </header>
+
+    <main class="container" style="max-width: 1000px;">
+        <h2 style="margin-bottom: 20px;">Danh Sách Môn Học</h2>
+        
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}<div class="flash-messages" style="background-color: #2ecc71;">{{ messages[0] }}</div>{% endif %}
+        {% endwith %}
+
+        <div class="dashboard-card" style="text-align: left; margin-bottom: 20px; padding: 20px;">
+            <form method="POST" style="display: flex; gap: 15px; align-items: flex-end; flex-wrap: wrap;">
+                <div class="form-group" style="flex: 2; margin: 0; min-width: 250px;">
+                    <label>Tên môn học mới</label>
+                    <input type="text" name="name" class="form-control" placeholder="Ví dụ: Cơ sở dữ liệu, Kế toán..." required>
+                </div>
+                <div class="form-group" style="flex: 1; margin: 0; min-width: 200px;">
+                    <label>Thuộc chuyên ngành</label>
+                    <input type="text" name="major" class="form-control" placeholder="Ví dụ: Công nghệ thông tin" required>
+                </div>
+                <button type="submit" class="btn btn-success" style="height: 44px; padding: 0 25px;">Thêm Môn</button>
+            </form>
+        </div>
+
+        <form method="GET" action="/admin/subjects" style="display: flex; gap: 15px; flex-wrap: wrap; align-items: flex-end; margin-bottom: 30px;">
+            <div class="form-group" style="flex: 2; margin: 0; min-width: 250px;">
+                <label>Tìm kiếm môn học</label>
+                <input type="text" name="keyword" class="form-control" placeholder="Nhập tên môn..." value="{{ keyword }}">
+            </div>
+            <div class="form-group" style="flex: 1; margin: 0; min-width: 150px;">
+                <label>Lọc theo Ngành</label>
+                <select name="major_filter" class="form-control">
+                    <option value="">-- Tất cả ngành --</option>
+                    {% for maj in majors %}
+                        <option value="{{ maj }}" {% if maj == major_filter %}selected{% endif %}>{{ maj }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button type="submit" class="btn btn-primary" style="height: 44px; padding: 0 20px;">Lọc / Tìm</button>
+                <a href="/admin/subjects" class="btn btn-outline" style="height: 44px; display: inline-flex; align-items: center; padding: 0 15px;">Hủy lọc</a>
+            </div>
+        </form>
+
+        {% for major_name, items in subjects|groupby('major') %}
+            <div style="margin-bottom: 40px;">
+                <h4 style="color: #00d2ff; border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 15px;">
+                    Chuyên ngành: {{ major_name }}
+                </h4>
+                <div class="table-wrapper" style="margin-top: 0;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 80px;">ID</th>
+                                <th>Tên Môn Học</th>
+                                <th style="width: 150px; text-align: center;">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for subject in items %}
+                            <tr>
+                                <td>{{ subject.id }}</td>
+                                <td>{{ subject.name }}</td>
+                                <td style="text-align: center;">
+                                    <a href="/admin/subjects/delete/{{ subject.id }}" class="btn btn-danger btn-sm" onclick="return confirm('Xóa môn học này sẽ xóa toàn bộ điểm của sinh viên đang học. Tiếp tục?');">Xóa</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% else %}
+            <div class="dashboard-card text-center" style="padding: 30px;">
+                <p style="color: #888; margin: 0;">Không tìm thấy môn học nào.</p>
+            </div>
+        {% endfor %}
+    </main>
+</body>
+</html>
