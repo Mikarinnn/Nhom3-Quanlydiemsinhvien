@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Kết quả học tập</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; }
+        .stat-box { background: rgba(0,255,136,0.1); padding: 15px; border-radius: 8px; border-left: 4px solid #00ff88; text-align: center; }
+        .stat-value { font-size: 1.5rem; font-weight: bold; color: #00ff88; margin-top: 5px; }
+        .semester-title { color: #00d2ff; border-bottom: 1px solid #333; padding-bottom: 10px; margin-top: 30px; margin-bottom: 15px; }
+        .semester-footer { background-color: #2a2a35; padding: 15px; text-align: right; border-radius: 0 0 8px 8px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">Khu Vực Học Tập</div>
+        <div class="user-menu"><a href="/" class="btn btn-outline">Quay lại Trang chủ</a></div>
+    </header>
+
+    <main class="container" style="max-width: 1000px;">
+        <div class="dashboard-card" style="text-align: left; margin-bottom: 30px;">
+            <h2 style="color: #fff; margin-bottom: 10px;">Hồ Sơ & Thống Kê Tổng Quan</h2>
+            <p style="color: #bbb;"><strong>Sinh viên:</strong> {{ profile.user.full_name }} &nbsp;|&nbsp; <strong>Mã SV:</strong> {{ profile.user.username }}</p>
+            <p style="color: #bbb;"><strong>Lớp:</strong> {{ profile.class_name }} &nbsp;|&nbsp; <strong>Ngành:</strong> {{ profile.major }}</p>
+            
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div>Tổng Điểm Tích Lũy (Hệ 10)</div>
+                    <div class="stat-value">{{ cpa_10 }}</div>
+                </div>
+                <div class="stat-box">
+                    <div>Tổng Điểm Tích Lũy (Hệ 4)</div>
+                    <div class="stat-value" style="color: #00d2ff;">{{ cpa_4 }}</div>
+                </div>
+                <div class="stat-box" style="border-left-color: #f39c12; background: rgba(243,156,18,0.1);">
+                    <div>Xếp Loại Học Lực</div>
+                    <div class="stat-value" style="color: #f39c12;">{{ hoc_luc }}</div>
+                </div>
+            </div>
+        </div>
+
+        <h3 style="color: #fff;">Bảng Điểm Chi Tiết Theo Kỳ Học</h3>
+        
+        {% for sem in sorted_semesters %}
+            <h4 class="semester-title">📚 {{ sem }}</h4>
+            <div class="table-wrapper" style="margin-bottom: 0; border-radius: 8px 8px 0 0;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Môn Học</th>
+                            <th style="width: 100px; text-align: center;">Điểm A</th>
+                            <th style="width: 100px; text-align: center;">Điểm B</th>
+                            <th style="width: 100px; text-align: center;">Điểm C</th>
+                            <th style="width: 120px; text-align: center;">Tổng (Hệ 10)</th>
+                            <th style="width: 120px; text-align: center;">GPA (Hệ 4)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for score in scores_by_semester[sem] %}
+                        <tr>
+                            <td><strong>{{ score.subject.name }}</strong></td>
+                            <td style="text-align: center;">{{ score.score_a }}</td>
+                            <td style="text-align: center;">{{ score.score_b }}</td>
+                            <td style="text-align: center;">{{ score.score_c }}</td>
+                            <td style="text-align: center; color: #00ff88; font-weight: bold;">{{ score.gpa_scale_10 }}</td>
+                            <td style="text-align: center; color: #00d2ff; font-weight: bold;">{{ score.gpa_scale_4 }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="semester-footer">
+                Trung bình học kỳ (Hệ 10): <span style="color: #00ff88; margin-right: 20px;">{{ semester_stats[sem].gpa_10 }}</span>
+                Trung bình học kỳ (Hệ 4): <span style="color: #00d2ff;">{{ semester_stats[sem].gpa_4 }}</span>
+            </div>
+        {% else %}
+            <div class="dashboard-card text-center" style="padding: 40px; margin-top: 20px;">
+                <p style="color: #888; margin: 0;">Bạn chưa đăng ký và có điểm học phần nào.</p>
+            </div>
+        {% endfor %}
+    </main>
+</body>
+</html>
