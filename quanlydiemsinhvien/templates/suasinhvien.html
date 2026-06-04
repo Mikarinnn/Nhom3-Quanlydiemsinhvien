@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Sửa Thông Tin Sinh Viên</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <main class="container">
+        <div class="form-container">
+            <h2>Chỉnh Sửa Thông Tin</h2>
+            <form method="POST">
+                <div class="form-group">
+                    <label>Họ và tên</label>
+                    <input type="text" name="full_name" class="form-control" value="{{ user.full_name }}" placeholder="Ví dụ: Phạm Quốc Hoàng" required>
+                </div>
+                <div class="form-group">
+                    <label>Lớp</label>
+                    <input type="text" name="class_name" class="form-control" value="{{ user.student_profile.class_name }}" required>
+                </div>
+                <div class="form-group">
+                    <label>Ngành học</label>
+                    <input type="text" name="major" class="form-control" value="{{ user.student_profile.major }}" required>
+                </div>
+                
+                <button type="submit" class="btn btn-warning w-100">Cập nhật thông tin</button>
+            </form>
+            <div class="form-links mt-3"><a href="/admin/students">Hủy và quay lại</a></div>
+        </div>
+    </main>
+</body>
+</html>

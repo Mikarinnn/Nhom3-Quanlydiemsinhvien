@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Phòng Đào Tạo - Quản lý Học Phần</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">Quản Lý Học Phần Sinh Viên</div>
+        <div class="user-menu"><a href="/" class="btn btn-outline">Quay lại Trang chủ</a></div>
+    </header>
+
+    <main class="container" style="max-width: 1000px;">
+        <h2 style="margin-bottom: 20px;">Chọn Sinh Viên Để Quản Lý Học Phần</h2>
+
+        <div class="dashboard-card" style="text-align: left; margin-bottom: 20px; padding: 20px;">
+            <form method="GET" action="/admin/enroll" style="display: flex; gap: 15px; flex-wrap: wrap; align-items: flex-end;">
+                <div class="form-group" style="flex: 2; margin: 0; min-width: 250px;">
+                    <label>Tìm kiếm (Họ tên / Mã SV)</label>
+                    <input type="text" name="keyword" class="form-control" placeholder="Nhập tên hoặc mã sinh viên..." value="{{ keyword }}">
+                </div>
+                <div class="form-group" style="flex: 1; margin: 0; min-width: 150px;">
+                    <label>Lọc theo Lớp</label>
+                    <select name="class_filter" class="form-control">
+                        <option value="">-- Tất cả lớp --</option>
+                        {% for cls in classes %}
+                            <option value="{{ cls }}" {% if cls == class_filter %}selected{% endif %}>{{ cls }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group" style="flex: 1; margin: 0; min-width: 150px;">
+                    <label>Lọc theo Ngành</label>
+                    <select name="major_filter" class="form-control">
+                        <option value="">-- Tất cả ngành --</option>
+                        {% for maj in majors %}
+                            <option value="{{ maj }}" {% if maj == major_filter %}selected{% endif %}>{{ maj }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button type="submit" class="btn btn-primary" style="height: 44px; padding: 0 20px;">Lọc / Tìm</button>
+                    <a href="/admin/enroll" class="btn btn-outline" style="height: 44px; display: inline-flex; align-items: center; padding: 0 15px;">Hủy lọc</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Mã sinh viên</th>
+                        <th>Họ và tên</th>
+                        <th>Lớp</th>
+                        <th>Ngành</th>
+                        <th style="width: 180px; text-align: center;">Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td>{{ student.username }}</td>
+                        <td>{{ student.full_name }}</td>
+                        <td>{{ student.student_profile.class_name if student.student_profile else 'N/A' }}</td>
+                        <td>{{ student.student_profile.major if student.student_profile else 'N/A' }}</td>
+                        <td style="text-align: center;">
+                            <a href="/admin/enroll/{{ student.student_profile.id }}" class="btn btn-warning btn-sm">Quản Lý Học Phần</a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr><td colspan="5" class="text-center">Không tìm thấy sinh viên nào phù hợp.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+</html>
