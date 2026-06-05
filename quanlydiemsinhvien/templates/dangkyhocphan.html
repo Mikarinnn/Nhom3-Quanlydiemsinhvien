@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng Ký Học Phần</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">Khu Vực Đăng Ký Môn Học</div>
+        <div class="user-menu"><a href="/" class="btn btn-outline">Quay lại Trang chủ</a></div>
+    </header>
+
+    <main class="container" style="max-width: 900px;">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}<div class="flash-messages" style="background-color: #2ecc71;">{{ messages[0] }}</div>{% endif %}
+        {% endwith %}
+
+        <div class="dashboard-card" style="text-align: left; margin-bottom: 30px; padding: 20px;">
+            <h3 style="margin-bottom: 5px; color: #fff;">Đăng Ký Môn Học Mới</h3>
+            <p style="color: #00ff88; font-weight: bold; margin-bottom: 15px;">Chuyên ngành của bạn: {{ profile.major }}</p>
+            
+            {% if available_subjects %}
+                <form method="POST" style="display: flex; gap: 15px; align-items: flex-end; flex-wrap: wrap;">
+                    
+                    <div class="form-group" style="flex: 2; margin: 0; min-width: 250px;">
+                        <label>Chọn môn học đang mở (Chỉ hiển thị môn đúng ngành)</label>
+                        <select name="subject_id" class="form-control" required>
+                            <option value="" disabled selected>-- Chọn môn học --</option>
+                            {% for sub in available_subjects %}
+                                <option value="{{ sub.id }}">{{ sub.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group" style="flex: 1; margin: 0; min-width: 150px;">
+                        <label>Kỳ học</label>
+                        <select name="semester" class="form-control" required>
+                            <option value="Học kỳ 1">Học kỳ 1 - 2021/2022</option>
+                            <option value="Học kỳ 2">Học kỳ 2 - 2021/2022</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="height: 44px; padding: 0 25px;">Đăng Ký Ngay</button>
+                </form>
+            {% else %}
+                <div style="padding: 15px; background-color: rgba(255, 255, 255, 0.05); border-radius: 5px; border-left: 4px solid #f39c12;">
+                    <p style="color: #ddd; margin: 0;">Hiện tại không có học phần mới nào thuộc chuyên ngành <strong>{{ profile.major }}</strong> dành cho bạn, hoặc bạn đã đăng ký toàn bộ.</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <h3 style="color: #fff; margin-bottom: 15px;">Các Môn Học Đã Đăng Ký</h3>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 80px;">ID Môn</th>
+                        <th>Tên Môn Học</th>
+                        <th>Kỳ Học</th>
+                        <th style="width: 150px; text-align: center;">Trạng thái điểm</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for score in enrolled_scores %}
+                    <tr>
+                        <td>{{ score.subject.id }}</td>
+                        <td><strong>{{ score.subject.name }}</strong></td>
+                        <td style="color: #00d2ff;">{{ score.semester }}</td>
+                        <td style="text-align: center;">
+                            {% if score.score_a == 0 and score.score_b == 0 and score.score_c == 0 %}
+                                <span style="color: #f39c12; font-weight: bold;">Đang học</span>
+                            {% else %}
+                                <span style="color: #00ff88; font-weight: bold;">Đã có điểm</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr><td colspan="4" class="text-center">Bạn chưa đăng ký môn học nào.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+</html>
